@@ -9,7 +9,7 @@ const TaskList = () => {
 
   // Fetch tasks from the Spring Boot API when the component mounts
   useEffect(() => {
-    axios.get('https://test-webapp-spring-react-postgre.onrender.com/api/tasks')
+    axios.get(`${process.env.REACT_APP_API_URL}`)
       .then(response => {
         setTasks(response.data);
         console.log('Fetched tasks:', response.data);  // Added logging
@@ -24,7 +24,7 @@ const TaskList = () => {
   const handleCreateTask = () => {
     if (newTaskDescription.trim()) {
       console.log('Adding task:', newTaskDescription); // Added logging
-      axios.post('https://test-webapp-spring-react-postgre.onrender.com/api/tasks', {
+      axios.post(`${process.env.REACT_APP_API_URL}`, {
         description: newTaskDescription,
         done: false,
       })
@@ -51,7 +51,7 @@ const TaskList = () => {
 
       if (taskToDelete) {
         console.log('Deleting task:', taskToDelete); // Added logging
-        axios.delete(`https://test-webapp-spring-react-postgre.onrender.com/api/tasks/${taskToDelete.id}`)
+        axios.delete(`${process.env.REACT_APP_API_URL}/${taskToDelete.id}`)
           .then(() => {
             console.log('Task deleted:', taskToDelete); // Added logging
             setTasks(tasks.filter(task => task.id !== taskToDelete.id)); // Update tasks list
